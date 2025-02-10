@@ -10,6 +10,17 @@ Settings -> System -> Developer Options -> Smallest Width
 
 ***
 
+### Emergency SOS
+1. **Enable Emergency SOS**:  
+   - Go to **Settings** → **Safety & emergency** → **Emergency SOS**.  
+   - Turn it on if it's not already enabled.  
+   - Set up your **region’s emergency code**.
+2. **Add Emergency Information**:  
+   - Go back to **Safety & emergency** → **Emergency Information**.
+   - Add **emergency contacts** and fill in your **personal information** as needed.
+
+***
+
 ### Enabling Auto HBM
 I Recommend to enable it, to have nice experience in direct sunlight.  
 Settings -> Display -> High Brightness Mode -> Auto HBM
