@@ -1,29 +1,29 @@
 # art
 cd art
-git fetch https://github.com/PixelLineage/art refs/heads/a15
-git cherry-pick c17d0487ae0f6a18eadd00169bfa0dc59b8edb8c
-git cherry-pick c17d0487ae0f6a18eadd00169bfa0dc59b8edb8c..af06afbf90452b6d74a81ab9591225163f143f9f
+git fetch https://github.com/PixelLineage/art refs/heads/qpr
+git cherry-pick 8b8e08365f2f457e5c2b27bd8e81139e21ff1ffd
+git cherry-pick 8b8e08365f2f457e5c2b27bd8e81139e21ff1ffd..bf4d0b3ab20e2271639a80d60e5e2e3d698b7fd9
 cd ..
 
 # build
 cd build/make
-git fetch https://github.com/PixelLineage/build refs/heads/a15
-git cherry-pick a69cdaddea9902a47ce8f1e280b323839d302b03
-git cherry-pick a69cdaddea9902a47ce8f1e280b323839d302b03..bb2ca6d19ba3c04f00507106bbe48a4d7c380e20
+git fetch https://github.com/PixelLineage/build refs/heads/qpr
+git cherry-pick a73fa4abca574d530a22ab844d908756437d182d
+git cherry-pick a73fa4abca574d530a22ab844d908756437d182d..c83ebb2dc7c8a916b94d38daa2a0fd58be128602
 cd ../..
 
 # build/soong
 cd build/soong
-git fetch https://github.com/PixelLineage/build_soong refs/heads/a15
-git cherry-pick d58844f677d2b6e21c0a6ac9a747a76da700216a
-git cherry-pick d58844f677d2b6e21c0a6ac9a747a76da700216a..fe8b41590cbcfcd4a46781a17682ced2e2939518
+git fetch https://github.com/PixelLineage/build_soong refs/heads/qpr
+git cherry-pick 28a9e626d0dcce62ff4c9b724dca524337dd99cf
+git cherry-pick 28a9e626d0dcce62ff4c9b724dca524337dd99cf..4ec42f161bc60ed752a2cfff4cf04943e1d62cc8
 cd ../..
 
 # bionic
 cd bionic
-git fetch https://github.com/PixelLineage/bionic refs/heads/a15
-git cherry-pick 7abf0b81c0459b755e7d0fa7f0fc09b8dce2cc09
-git cherry-pick 7abf0b81c0459b755e7d0fa7f0fc09b8dce2cc09..7ac00f300ad9e6393b05885ddc114df412bb201a
+git fetch https://github.com/PixelLineage/bionic refs/heads/qpr
+git cherry-pick f82fc0fcc6dcec34136d3d1e630ef5f87097d867
+git cherry-pick f82fc0fcc6dcec34136d3d1e630ef5f87097d867..9315ac962e6297c881aef12a247bc9b371b8a608
 cd ..
 
 # bootable_recovery
@@ -34,16 +34,15 @@ cd ../..
 
 # external/skia
 cd external/skia
-git fetch https://github.com/PixelLineage/external_skia refs/heads/feb25
-git cherry-pick b4819efeb5641b0e634fb0e768bd543655678213
-git cherry-pick b4819efeb5641b0e634fb0e768bd543655678213..d3f553b9f6f08a395ccd41ed8c750639f44967fa
+git fetch https://github.com/PixelLineage/external_skia refs/heads/qpr
+git cherry-pick c084d0b8d853958730b4985ba6df15f6e1bedb5a
+git cherry-pick c084d0b8d853958730b4985ba6df15f6e1bedb5a..f154d45292ec8da1ac33c79a3e6a20d9e7c3d449
 cd ../..
 
 # lineage-sdk
 cd lineage-sdk
-git fetch https://github.com/PixelLineage/lineage-sdk refs/heads/feb25
-git cherry-pick 21032383f878024975bf6b36b11427774f74895a
-git cherry-pick 21032383f878024975bf6b36b11427774f74895a..2615eb6f7166dce345e7a9a6527cc646fd3c1932
+git fetch https://github.com/PixelLineage/lineage-sdk refs/heads/qpr
+git cherry-pick a9704bd1446059a3cf456aa78ea120dfb4ab3f26
 cd ..
 
 # uclamp sm8250
@@ -55,44 +54,37 @@ cd ../../../..
 
 # fw base
 cd frameworks/base
-git fetch https://github.com/PixelLineage/frameworks_base refs/heads/feb25
-git cherry-pick 9591dd9cf4f85b51c853c1d8f897ec70d060f264
-git cherry-pick 9591dd9cf4f85b51c853c1d8f897ec70d060f264..c8b3300b55edcd4b66e790d0faee52ab833d4608
+git fetch https://github.com/PixelLineage/frameworks_base refs/heads/qpr
+git cherry-pick 99b726f6c782623980d1e2773e86b6c911e57bd1
+git cherry-pick 99b726f6c782623980d1e2773e86b6c911e57bd1..ade02b655de7646e44ab9e2bc0b37bf40212b4c2
 cd ../..
 
 # fw native
 cd frameworks/native
-git fetch https://github.com/PixelLineage/frameworks_native refs/heads/a15
-git cherry-pick d3b4eb7fac1876d0d1e6de15edd2601ea2b6dc8f
-git cherry-pick d3b4eb7fac1876d0d1e6de15edd2601ea2b6dc8f..cc156011537a743836a0bf7c231b02b32e871d87
-cd ../..
-
-# fw av
-cd frameworks/av
-git fetch https://github.com/PixelLineage/frameworks_av refs/heads/a15
-git cherry-pick 9226d349e830f493addffba7e782acf29382d10f
-git cherry-pick 9226d349e830f493addffba7e782acf29382d10f..83ef8790302c1d05c2af525a73d09ab08413433a
+git fetch https://github.com/PixelLineage/frameworks_native refs/heads/qpr
+git cherry-pick fc9e4c59d0ea6e2697ada3280222ec915f5eca7f
+git cherry-pick fc9e4c59d0ea6e2697ada3280222ec915f5eca7f..03abba7b51a8de3c7634823e789ad840090d9e2b
 cd ../..
 
 # vendor
 cd vendor/lineage
-git fetch https://github.com/PixelLineage/vendor_lineage refs/heads/feb25
-git cherry-pick cdfb9ec2e689f275384c4158a1d2b475114b888b
-git cherry-pick cdfb9ec2e689f275384c4158a1d2b475114b888b..a8dd42022a23fa0602229e0348094d752ded18a9
+git fetch https://github.com/PixelLineage/vendor_lineage refs/heads/qpr
+git cherry-pick 405b8f5369d6513d352c6a5b4b6b7d00ff5c54b2
+git cherry-pick 405b8f5369d6513d352c6a5b4b6b7d00ff5c54b2..a1591f25f59163d0a1f2e18a6ccf73407e7a3c76
 cd ../..
 
 # vendor overlays
 cd packages/overlays/Lineage
-git fetch https://github.com/PixelLineage/packages_overlays_Lineage refs/heads/feb25
-git cherry-pick 1afced9a76c63a4c55989ccc1cf5a08d70b6149f 
-git cherry-pick 1afced9a76c63a4c55989ccc1cf5a08d70b6149f..2a47e4ee4e5db4a592c3cb4921df7c9aca997ba9
+git fetch https://github.com/PixelLineage/packages_overlays_Lineage refs/heads/qpr
+git cherry-pick 0cf728d7fc7ee56b3c6d7b4ae6a1158ce54083df 
+git cherry-pick 0cf728d7fc7ee56b3c6d7b4ae6a1158ce54083df..1ed2375639bdc7caf063e38b2e69ad7a536eae2e
 cd ../../..
 
 # settings
 cd packages/apps/Settings
-git fetch https://github.com/PixelLineage/packages_apps_Settings refs/heads/feb25
-git cherry-pick a770f936a3c191379ba4322a45e13138b5db34d2
-git cherry-pick a770f936a3c191379ba4322a45e13138b5db34d2..31f3e7612d568771d643d62d87050c71eee631fb
+git fetch https://github.com/PixelLineage/packages_apps_Settings refs/heads/qpr
+git cherry-pick 2d28d61688ba2f54e94563dd43eb60e8008d3df6
+git cherry-pick 2d28d61688ba2f54e94563dd43eb60e8008d3df6..9865f6f89bd94dac31bd22ef48a9890a93cb38e4
 cd ../../..
 
 # system core
@@ -111,7 +103,7 @@ cd ../../..
 
 # disable lineage stats
 cd packages/apps/LineageParts
-git fetch https://github.com/PixelLineage/packages_apps_LineageParts refs/heads/feb25
-git cherry-pick 57c584365e1a8bad75fc76e590986fb5720c27cd
-git cherry-pick 57c584365e1a8bad75fc76e590986fb5720c27cd..9b919dbacc8dec8fb570abf54226c4779ce1ce1c
+git fetch https://github.com/PixelLineage/packages_apps_LineageParts refs/heads/qpr2
+git cherry-pick 6a57a6c4b3272587b9f1876f7ab43a5de7bb320b
+git cherry-pick 6a57a6c4b3272587b9f1876f7ab43a5de7bb320b..4f072f2e6a21a01c3d3dbfbe0796561e2d8b5ab2
 cd ../../..
