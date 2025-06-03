@@ -22,8 +22,8 @@ cd ../..
 # bionic
 cd bionic
 git fetch https://github.com/PixelLineage/bionic refs/heads/qpr2
-git cherry-pick 19c757b5edc766ebaf37abe87445e09f934e67eb
-git cherry-pick 19c757b5edc766ebaf37abe87445e09f934e67eb..735c0e525c74bda5ee14ca0302b10df7c5652c1b
+git cherry-pick 8be0495eb7e15910776d3582787511c2c57e58b6
+git cherry-pick 8be0495eb7e15910776d3582787511c2c57e58b6..662fcd8cea9294cb4b6033497d0bbe149d69a194
 cd ..
 
 # bootable_recovery
@@ -55,8 +55,8 @@ cd ../../../..
 # fw base
 cd frameworks/base
 git fetch https://github.com/PixelLineage/frameworks_base refs/heads/qpr2
-git cherry-pick 65e68953283b3de6912b52857544ee816632d6b6
-git cherry-pick 65e68953283b3de6912b52857544ee816632d6b6..e15b0f8e92fb7b15b188f5d5e56c6882452a6afc
+git cherry-pick 0ef52a671d0c1eb8e05e7569d0b65b2d66f2068d
+git cherry-pick 0ef52a671d0c1eb8e05e7569d0b65b2d66f2068d..8476f3d116a3c50abc52b5d7c0742ccad718af83
 cd ../..
 
 # fw native
@@ -69,8 +69,8 @@ cd ../..
 # vendor
 cd vendor/lineage
 git fetch https://github.com/PixelLineage/vendor_lineage refs/heads/qpr2
-git cherry-pick 0fd7c91dc2394599af4f93e864000fa47398ebef
-git cherry-pick 0fd7c91dc2394599af4f93e864000fa47398ebef..c70e63b4abeda04222d7beb3be9ed4e6854e4788
+git cherry-pick 68d08386a386496d980d2287957ba5e9ee5108fc
+git cherry-pick 68d08386a386496d980d2287957ba5e9ee5108fc..34310a48ee86b3a37e9310dfc65de0df1d09f39c
 cd ../..
 
 # vendor overlays
@@ -117,8 +117,8 @@ cd ../../..
 # system/security
 cd system/security
 git fetch https://github.com/PixelLineage/system_security refs/heads/qpr2
-git cherry-pick 8e24c7167b7eebe8e3c246abce3ebf1452a7f5c2
-git cherry-pick 8e24c7167b7eebe8e3c246abce3ebf1452a7f5c2..f18a8700c1d8523cfb663cd0000f28f7840f6e9b
+git cherry-pick 321b1f83d3a2682de9d373ab3db6121a1f521aa4
+git cherry-pick 321b1f83d3a2682de9d373ab3db6121a1f521aa4..c2b8b0b828baf30eec72e66ecf918b579a223745
 cd ../..
 
 # boringssl
