@@ -1,12 +1,18 @@
 This update fixes critical bugs and improves the performance and stability of your device. Learn more at [t.me/PixelLineage](https://t.me/PixelLineage).
 
-### 14 August
-- Fixed GL rendering issues leading to crashes on YT Music
-- Fixed issues with sound configs (better instrumental balance)
+### 30 August - HOTFIX
+- Major kernel upgrades for improved efficiency and performance
+- Enhanced audio tuning and bugfixes
+- Fixed Bluetooth call glitch
+
+### 27 August
+- Shift to older kernel base for better stability (until upstream gets stable enough)
 - Improvements on playintegrity implementation
 
+### 14 August
+- Fixed issues with sound configs (better instrumental balance)
+
 ### 13 August
-- Fixed YT Music and other streaming apps crashing
 - Implement new workaround for playintegrity
 - Upstreamed LineageOS sources
 - Upstreamed kernel and ksunext
