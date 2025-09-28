@@ -1,10 +1,15 @@
 This update fixes bugs and improves the performance and stability of your device. Learn more at [t.me/PixelLineage](https://t.me/PixelLineage).
 
-### Switched from zlib → zlib-ng
+## 28 September
+Fixes and optimizations for improved smoothness and overall efficiency.
+
+## 26 September
+
+### Switched to zlib-ng
   - Faster compression and decompression
   - Reduced CPU usage for heavy data operations
 
-### Integrated jemalloc
+### Integrated Jemalloc
   - More efficient memory allocation
   - Improved performance under high load
 
