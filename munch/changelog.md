@@ -1,17 +1,8 @@
 This update fixes bugs and improves the performance and stability of your device. Learn more at [t.me/PixelLineage](https://t.me/PixelLineage).
 
-## 28 September
-Fixes and optimizations for improved smoothness and overall efficiency.
+## 25 October
+This build includes a hack to achieve strong integrity, as it's currently impossible to obtain integrity without a valid keybox being publicly available.
 
-## 26 September
+It has been tested, but please share your feedback in the [support group](https://t.me/QuickPortal) if any banking apps fail or don't work properly.
 
-### Switched to zlib-ng
-  - Faster compression and decompression
-  - Reduced CPU usage for heavy data operations
-
-### Integrated Jemalloc
-  - More efficient memory allocation
-  - Improved performance under high load
-
-### Updated KernelSU-Next to v1.1.1
-  - Stability fixes and upstream optimizations
+If something doesn't work, we don't guarantee a fix, but we'll try.
