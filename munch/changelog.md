@@ -1,5 +1,10 @@
 This update fixes bugs and improves the performance and stability of your device. Learn more at [t.me/PixelLineage](https://t.me/PixelLineage).
 
+## 12 November
+- Updated keybox and fp for integrity
+- Updated Pixel Launcher prebuilt
+- Fixed bugs in ReVanced implementation
+
 ## 8 November
 - Added prebuilt ReVanced YouTube and YT Music apps, can be disabled as per need. [Click here](https://t.me/PixelLineage/89) to learn more.
 - Import display config from HyperOS to improve HDR content appearance. (Kudos to johnmart)
