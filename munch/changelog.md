@@ -1,5 +1,11 @@
 This update fixes bugs and improves the performance and stability of your device. Learn more at [t.me/PixelLineage](https://t.me/PixelLineage).
 
+## 20 November
+- November security patch
+- Updated keybox for integrity
+- Temporarily removed fake strong integrity hack
+- Fixed a minor issue with Revanced Music implementation
+
 ## 12 November
 - Updated keybox and fp for integrity
 - Updated Pixel Launcher prebuilt
