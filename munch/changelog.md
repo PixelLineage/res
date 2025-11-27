@@ -1,5 +1,8 @@
 This update fixes bugs and improves the performance and stability of your device. Learn more at [t.me/PixelLineage](https://t.me/PixelLineage).
 
+## 28 November
+- Updated keybox for integrity
+
 ## 20 November
 - November security patch
 - Updated keybox for integrity
