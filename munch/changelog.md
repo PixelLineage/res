@@ -3,3 +3,6 @@ This update fixes bugs and improves the performance and stability of your device
 ## 29 January
 - Update Keybox
 - Update Kernel
+
+## 29 January - HOTFIX
+Bluetooth issues fixed, sorry for the inconvenience caused.
