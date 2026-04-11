@@ -18,6 +18,16 @@ git fetch https://github.com/PixelLineage/build_soong refs/heads/q2
 git cherry-pick 5431c27ff60f9234f0f5eeac811eea82175b9423
 git cherry-pick 5431c27ff60f9234f0f5eeac811eea82175b9423..daee004e6a00f52f843f7502621a771d71f74cf6
 git revert --no-edit 00f0f12293c56309a55bfb2c674a19e6af734ead # rm jemalloc fix later
+
+# peter fix
+git revert --no-edit 5d5ec9bb94d22288f24aaa5e1b72f10239eea968
+git revert --no-edit 2f11f7125083bd39d321933744e90b16d52cbc41
+git revert --no-edit e28a2eae962ec559578211c3c452f13aaf65886f
+git revert --no-edit 6db11ffea72411f726ee1d4bd81a39bff34956ed
+
+# revolut check
+git cherry-pick a9d0e04d478f157ebc063d30949ee96e9342c032
+
 cd ../..
 
 # bionic
