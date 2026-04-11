@@ -1,10 +1,16 @@
-This update fixes bugs and improves the performance and stability of your device. Learn more at [t.me/PixelLineage](https://t.me/PixelLineage).
+This update fixes critical bugs and improves the performance and stability of your device. Learn more at [t.me/PixelLineage](https://t.me/PixelLineage).
 
-## 19 February
-- Update keybox for integrity
-- 95 audio bugs fixed
-- Minor RAM management fixes
+* Android 16 QPR2 April security patch.
+* 99% success rate for updates, but there's a 1% chance it might result in a bootloop, so make sure to keep a backup just in case.
+* 32-bit apps will no longer work. If you have any, delete them before updating.
+* KernelSU-Next removed due to regressions. Revert to KernelSU 0.9.5 (get APK from notes in TG group).
+* Dropped Leica Micam.
+* Updated Revanced prebuilts.
+* Improved audio EQ tuning for more pleasing instrumentals.
+* Major bug fixes and performance improvements.
 
-## 24 February
-- Disabled bluetooth absolute volume by default ([details](https://t.me/RealQuickLtd/77))
-- Update keybox for integrity
+## Notes
+
+* Integrity is no longer supported. If you rely on banking apps that require it, stick to A15. We give no guarantees and will not provide any integrity-related patches moving forward.
+* Android 16 has blur enabled by default. If you want to save battery and have a smoother UI, disable it. However, if you prefer the cosmetic look, keep it enabled.
+
