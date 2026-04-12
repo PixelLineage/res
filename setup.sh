@@ -34,7 +34,7 @@ cd ../..
 cd bionic
 git fetch https://github.com/PixelLineage/bionic refs/heads/q2
 git cherry-pick da71ebfc8d3caf706c260b61542ebd8331b25c7b
-git cherry-pick da71ebfc8d3caf706c260b61542ebd8331b25c7b..cd13e888598ffc131ac56e53ce02eea3e934b9ba
+git cherry-pick da71ebfc8d3caf706c260b61542ebd8331b25c7b..949a46c3063d7b1e506103bf30af3ae754f8296e
 cd ..
 
 # # bpf - eman kernel booting fixes
@@ -97,7 +97,7 @@ cd ../..
 cd frameworks/native
 git fetch https://github.com/PixelLineage/frameworks_native refs/heads/q2
 git cherry-pick afaf501a27bcbfd93b3c985c82d49b8ea52f9039
-git cherry-pick afaf501a27bcbfd93b3c985c82d49b8ea52f9039..ae02bcdc65f85ff5ba06b54171ddaca6ee538295
+git cherry-pick afaf501a27bcbfd93b3c985c82d49b8ea52f9039..9706c75efa3578c935fad0b9f11b4c251f1e567d
 cd ../..
 
 # vendor
@@ -139,7 +139,7 @@ cd ../../..
 cd system/core
 git fetch https://github.com/PixelLineage/system_core refs/heads/q2
 git cherry-pick a1a995619113f0caf32dc06593af18df45c91833
-git cherry-pick a1a995619113f0caf32dc06593af18df45c91833..f7a6400d59ccc86fb57c4d4960ba7db31e225c8d
+git cherry-pick a1a995619113f0caf32dc06593af18df45c91833..eeafce19e080bb68927e2107dfccddf0d6cd54f4
 git revert --no-edit 7c9d074741d2e7947ae58ec014078f4813e1cdd5 # rm jemalloc fix later
 cd ../..
 
@@ -173,6 +173,7 @@ git cherry-pick 7d22a8df8d25c1c0e35c867fb2454eb4726825af..1f05e32bd3d40fb8fa15ba
 cd ../../..
 
 # GMS PARTY
+rm -rf vendor/pixel
 git clone --depth 1 -b sixteen-qpr2 https://gitlab.com/PixelOS-AOSP/proprietary_vendor_pixel_clocks.git vendor/pixel/clocks
 git clone --depth 1 -b q2 https://gitlab.com/username0136/vendor-pixel-gms.git vendor/pixel/gms
 git clone --depth 1 -b sixteen-qpr2 https://gitlab.com/PixelOS-AOSP/proprietary_vendor_pixel_gsans.git vendor/pixel/gsans
