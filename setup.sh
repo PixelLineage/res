@@ -89,8 +89,8 @@ cd ../..
 # frameworks/base
 cd frameworks/base
 git fetch https://github.com/PixelLineage/frameworks_base refs/heads/q2
-git cherry-pick f280238c2ddf89f85860278601a4a0df695f9f32
-git cherry-pick f280238c2ddf89f85860278601a4a0df695f9f32..2141ecd9af2b654b3837f8cd9929054252c29e2e
+git cherry-pick 8c138be9aa94e5a237bb15845d15fdb27b808270
+git cherry-pick 8c138be9aa94e5a237bb15845d15fdb27b808270..d49d48d4a1b9
 cd ../..
 
 # frameworks/native - optimization
@@ -111,7 +111,7 @@ cd ../..
 cd packages/apps/Settings
 git fetch https://github.com/PixelLineage/packages_apps_Settings refs/heads/q2
 git cherry-pick fb3a6d14013fd44cb2a85df6070dbcbd0378bbdf
-git cherry-pick fb3a6d14013fd44cb2a85df6070dbcbd0378bbdf..7d3700d7214
+git cherry-pick fb3a6d14013fd44cb2a85df6070dbcbd0378bbdf..5e59cbd11c5
 cd ../../..
 
 # lineage-sdk
