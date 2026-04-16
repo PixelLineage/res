@@ -16,7 +16,7 @@ cd ../..
 cd build/soong
 git fetch https://github.com/PixelLineage/build_soong refs/heads/q2
 git cherry-pick 5431c27ff60f9234f0f5eeac811eea82175b9423
-git cherry-pick 5431c27ff60f9234f0f5eeac811eea82175b9423..daee004e6a00f52f843f7502621a771d71f74cf6
+git cherry-pick 5431c27ff60f9234f0f5eeac811eea82175b9423..f6b673e17
 git revert --no-edit 00f0f12293c56309a55bfb2c674a19e6af734ead # rm jemalloc fix later
 
 # peter fix
@@ -36,6 +36,12 @@ git fetch https://github.com/PixelLineage/bionic refs/heads/q2
 git cherry-pick da71ebfc8d3caf706c260b61542ebd8331b25c7b
 git cherry-pick da71ebfc8d3caf706c260b61542ebd8331b25c7b..949a46c3063d7b1e506103bf30af3ae754f8296e
 cd ..
+
+# bootable_recovery
+cd bootable/recovery
+git fetch https://github.com/PixelLineage/bootable_recovery refs/heads/qpr2
+git cherry-pick 4e92d616cd30925eecfeeed23d64ce65d72053b9
+cd ../..
 
 # # bpf - eman kernel booting fixes
 # cd system/bpf
@@ -90,7 +96,7 @@ cd ../..
 cd frameworks/base
 git fetch https://github.com/PixelLineage/frameworks_base refs/heads/q2
 git cherry-pick 8c138be9aa94e5a237bb15845d15fdb27b808270
-git cherry-pick 8c138be9aa94e5a237bb15845d15fdb27b808270..d49d48d4a1b9
+git cherry-pick 8c138be9aa94e5a237bb15845d15fdb27b808270..befc2c983398
 cd ../..
 
 # frameworks/native - optimization
@@ -104,14 +110,14 @@ cd ../..
 cd vendor/lineage
 git fetch https://github.com/PixelLineage/vendor_lineage refs/heads/q2
 git cherry-pick 95f24a4c94e7fb776b2988ea0cba9c6012230055
-git cherry-pick 95f24a4c94e7fb776b2988ea0cba9c6012230055..7b1720bc
+git cherry-pick 95f24a4c94e7fb776b2988ea0cba9c6012230055..8f65a8ca
 cd ../..
 
 # settings
 cd packages/apps/Settings
 git fetch https://github.com/PixelLineage/packages_apps_Settings refs/heads/q2
 git cherry-pick fb3a6d14013fd44cb2a85df6070dbcbd0378bbdf
-git cherry-pick fb3a6d14013fd44cb2a85df6070dbcbd0378bbdf..5e59cbd11c5
+git cherry-pick fb3a6d14013fd44cb2a85df6070dbcbd0378bbdf..422460e76c3
 cd ../../..
 
 # lineage-sdk
@@ -139,15 +145,40 @@ cd ../../..
 cd system/core
 git fetch https://github.com/PixelLineage/system_core refs/heads/q2
 git cherry-pick a1a995619113f0caf32dc06593af18df45c91833
-git cherry-pick a1a995619113f0caf32dc06593af18df45c91833..eeafce19e080bb68927e2107dfccddf0d6cd54f4
+git cherry-pick a1a995619113f0caf32dc06593af18df45c91833..23fba63d8
 git revert --no-edit 7c9d074741d2e7947ae58ec014078f4813e1cdd5 # rm jemalloc fix later
 cd ../..
+
+# device_lineage_sepolicy - rebrand props
+cd device/lineage/sepolicy
+git fetch https://github.com/PixelLineage/device_lineage_sepolicy refs/heads/qpr2
+git cherry-pick 86527173a1bfbaf80fa0b3e112caa805413a9bb6
+cd ../../..
 
 # updater
 cd packages/apps/Updater
 git fetch https://github.com/PixelLineage/packages_apps_Updater refs/heads/a16
+git cherry-pick 8aedbfb936fc1afbfaae4e89fcf2109d44d17251
 git cherry-pick ac04611d6f54f89e764ec0186b633e316fd82559
 cd ../../..
+
+
+# external_boringssl - integrity
+cd external/boringssl
+git fetch https://github.com/PixelLineage/external_boringssl refs/heads/qpr2
+git cherry-pick f2d51ab5094f553128f1ec77d85d98dfa4394e46
+cd ../..
+
+# system_security - integrity
+cd system/security
+git fetch https://github.com/PixelLineage/system_security refs/heads/a16
+git cherry-pick a76dcaf20da114595ab7734da025c2d9f8f113d3
+git cherry-pick a76dcaf20da114595ab7734da025c2d9f8f113d3..520e1cdf178b1c7c084e0f63110ff261004bb032
+cd ../..
+
+# extra overlay
+rm -rf vendor/extra
+git clone https://github.com/username0136/rom-dump vendor/extra -b integrity
 
 # hw ximi
 rm -rf hardware/xiaomi
