@@ -81,9 +81,9 @@ cd ../..
 
 # uclamp sm8250 - optimization
 cd hardware/qcom-caf/sm8250/display
-git fetch https://github.com/PixelLineage/hardware_qcom-caf_sm8250_display refs/heads/qpr2-new
-git cherry-pick 511e625736506dbed29129de3580b16506893099
-git cherry-pick 511e625736506dbed29129de3580b16506893099..eac5f120021faaa3ce448b794829878fbcb49f72
+git fetch https://github.com/PixelLineage/hardware_qcom-caf_sm8250_display refs/heads/q2
+git cherry-pick 4825d10bdbb290b35f5565c988ef5cf2d0697870
+git cherry-pick 4825d10bdbb290b35f5565c988ef5cf2d0697870..5ec1106f9cec0d8ddac10cfd84677e0d15ec9cda
 cd ../../../..
 
 # frameworks/av - lto fix
@@ -96,7 +96,7 @@ cd ../..
 cd frameworks/base
 git fetch https://github.com/PixelLineage/frameworks_base refs/heads/q2
 git cherry-pick 8c138be9aa94e5a237bb15845d15fdb27b808270
-git cherry-pick 8c138be9aa94e5a237bb15845d15fdb27b808270..befc2c983398
+git cherry-pick 8c138be9aa94e5a237bb15845d15fdb27b808270..6921a1380cfc
 cd ../..
 
 # frameworks/native - optimization
@@ -149,6 +149,12 @@ git cherry-pick a1a995619113f0caf32dc06593af18df45c91833..23fba63d8
 git revert --no-edit 7c9d074741d2e7947ae58ec014078f4813e1cdd5 # rm jemalloc fix later
 cd ../..
 
+# fk off libinder
+cd system/vold
+git fetch https://github.com/PixelLineage/system_vold
+git cherry-pick ebff65bce27ab917dd273f602cd858cd469536bb
+cd ../..
+
 # device_lineage_sepolicy - rebrand props
 cd device/lineage/sepolicy
 git fetch https://github.com/PixelLineage/device_lineage_sepolicy refs/heads/qpr2
@@ -173,7 +179,7 @@ cd ../..
 cd system/security
 git fetch https://github.com/PixelLineage/system_security refs/heads/a16
 git cherry-pick a76dcaf20da114595ab7734da025c2d9f8f113d3
-git cherry-pick a76dcaf20da114595ab7734da025c2d9f8f113d3..520e1cdf178b1c7c084e0f63110ff261004bb032
+git cherry-pick a76dcaf20da114595ab7734da025c2d9f8f113d3..c1ba5a518b1f554fbe535aa7e0910118fc70c0ab
 cd ../..
 
 # extra overlay
