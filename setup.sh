@@ -96,21 +96,21 @@ cd ../..
 cd frameworks/base
 git fetch https://github.com/PixelLineage/frameworks_base refs/heads/q2
 git cherry-pick 8c138be9aa94e5a237bb15845d15fdb27b808270
-git cherry-pick 8c138be9aa94e5a237bb15845d15fdb27b808270..6921a1380cfc
+git cherry-pick 8c138be9aa94e5a237bb15845d15fdb27b808270..81a94ef9f55b
 cd ../..
 
 # frameworks/native - optimization
 cd frameworks/native
 git fetch https://github.com/PixelLineage/frameworks_native refs/heads/q2
 git cherry-pick afaf501a27bcbfd93b3c985c82d49b8ea52f9039
-git cherry-pick afaf501a27bcbfd93b3c985c82d49b8ea52f9039..9706c75efa3578c935fad0b9f11b4c251f1e567d
+git cherry-pick afaf501a27bcbfd93b3c985c82d49b8ea52f9039..26c30a1815
 cd ../..
 
 # vendor
 cd vendor/lineage
 git fetch https://github.com/PixelLineage/vendor_lineage refs/heads/q2
 git cherry-pick 95f24a4c94e7fb776b2988ea0cba9c6012230055
-git cherry-pick 95f24a4c94e7fb776b2988ea0cba9c6012230055..8f65a8ca
+git cherry-pick 95f24a4c94e7fb776b2988ea0cba9c6012230055..9d7a7d3f
 cd ../..
 
 # settings
@@ -122,16 +122,16 @@ cd ../../..
 
 # lineage-sdk
 cd lineage-sdk
-git fetch https://github.com/PixelLineage/lineage-sdk refs/heads/qpr2-new --depth 10
-git cherry-pick b5094bdcb284a6634ea76066fd51e9b3d74e3619
-git cherry-pick b5094bdcb284a6634ea76066fd51e9b3d74e3619..70498cfcaa478c21677a68ea0e2e3dc537dc7340
+git fetch https://github.com/PixelLineage/lineage-sdk refs/heads/q2 --depth 10
+git cherry-pick f9acc2080f40af380d7b3086633494c12d57b3e4
+git cherry-pick f9acc2080f40af380d7b3086633494c12d57b3e4..24e513567e8fc5a195e6f450ee721c0365eb7443
 cd ..
 
 # LineageParts
 cd packages/apps/LineageParts
 git fetch https://github.com/PixelLineage/packages_apps_LineageParts refs/heads/q2
-git cherry-pick d246c5b646c1fa0e0547314fa297b3912eb4e758
-git cherry-pick d246c5b646c1fa0e0547314fa297b3912eb4e758..802487d185bb7d7b15eb54967e621dbd29fad085
+git cherry-pick 7c264d5fb5581e47267129285d0add4c7b53abc8
+git cherry-pick 7c264d5fb5581e47267129285d0add4c7b53abc8..a899cbbce4bc20067ce5d0398b51dd06dcecdd0f
 cd ../../..
 
 # settings intelligence
@@ -157,8 +157,8 @@ cd ../..
 
 # device_lineage_sepolicy - rebrand props
 cd device/lineage/sepolicy
-git fetch https://github.com/PixelLineage/device_lineage_sepolicy refs/heads/qpr2
-git cherry-pick 86527173a1bfbaf80fa0b3e112caa805413a9bb6
+git fetch https://github.com/PixelLineage/device_lineage_sepolicy refs/heads/q2
+git cherry-pick 79c4556aedf1ae2b1298f5363ba3ccca27d717d3
 cd ../../..
 
 # updater
@@ -179,7 +179,7 @@ cd ../..
 cd system/security
 git fetch https://github.com/PixelLineage/system_security refs/heads/a16
 git cherry-pick a76dcaf20da114595ab7734da025c2d9f8f113d3
-git cherry-pick a76dcaf20da114595ab7734da025c2d9f8f113d3..c1ba5a518b1f554fbe535aa7e0910118fc70c0ab
+git cherry-pick a76dcaf20da114595ab7734da025c2d9f8f113d3..dfb64d74
 cd ../..
 
 # extra overlay
