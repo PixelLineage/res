@@ -109,8 +109,8 @@ cd ../..
 # vendor
 cd vendor/lineage
 git fetch https://github.com/PixelLineage/vendor_lineage refs/heads/q2
-git cherry-pick 95f24a4c94e7fb776b2988ea0cba9c6012230055
-git cherry-pick 95f24a4c94e7fb776b2988ea0cba9c6012230055..9d7a7d3f
+git cherry-pick 8bf7d2c04fd75a053a4d717f1602a2cf7c59dc80
+git cherry-pick 8bf7d2c04fd75a053a4d717f1602a2cf7c59dc80..440e256f
 cd ../..
 
 # settings
@@ -131,7 +131,7 @@ cd ..
 cd packages/apps/LineageParts
 git fetch https://github.com/PixelLineage/packages_apps_LineageParts refs/heads/q2
 git cherry-pick 7c264d5fb5581e47267129285d0add4c7b53abc8
-git cherry-pick 7c264d5fb5581e47267129285d0add4c7b53abc8..a899cbbce4bc20067ce5d0398b51dd06dcecdd0f
+git cherry-pick 7c264d5fb5581e47267129285d0add4c7b53abc8..7db36a5719391b180a7e9706083450e7b5669453
 cd ../../..
 
 # settings intelligence
@@ -179,7 +179,7 @@ cd ../..
 cd system/security
 git fetch https://github.com/PixelLineage/system_security refs/heads/a16
 git cherry-pick a76dcaf20da114595ab7734da025c2d9f8f113d3
-git cherry-pick a76dcaf20da114595ab7734da025c2d9f8f113d3..dfb64d74
+git cherry-pick a76dcaf20da114595ab7734da025c2d9f8f113d3..fcb23414dfe54730bb7c04f648ac0d961cfe13fe
 cd ../..
 
 # extra overlay
