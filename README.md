@@ -1,16 +1,17 @@
 # PixelLineage
-In order to utilize this modification, please refer to [setup.sh](/setup.sh).
 
-## Please note the following points:
+PixelLineage metadata, OTA files, and installation notes for supported devices.
+
+## Build Notes
+
+- Apply the source changes with [setup.sh](setup.sh).
 - Remember to sign the build.
-- Clone the POS certified-overlays [repo](https://github.com/PixelLineage/vendor_extra), and include the keybox and device integrity fingerprint.
+- Check [certified_bundle](https://github.com/PixelLineage/certified_bundle) for keybox and device integrity.
 - There may be some device-specific items that could cause issues for you, so please adjust as needed.
-- GMS repo is available [here](https://gitlab.com/username0136/vendor_gms/-/tree/qpr2).
 
-## `munch` Users
-- [Installation Guide](munch/install.md)
-- [Announcement Channel](https://t.me/PixelLineage)
-- [Sponsor me!](https://github.com/sponsors/username0136)
+## Device Guides
 
-
-
+| Device | Installation | Community | Support |
+| --- | --- | --- | --- |
+| `munch` | [Installation guide](munch/install.md) | [Announcement channel](https://t.me/PixelLineage) | [Sponsor me](https://github.com/sponsors/username0136) |
+| `alioth` | [Installation guide](alioth/install.md) | [Announcement channel](https://t.me/PixelLineage) | [Sponsor me](https://github.com/sponsors/username0136) |

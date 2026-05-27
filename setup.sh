@@ -96,7 +96,7 @@ cd ../..
 cd frameworks/base
 git fetch https://github.com/PixelLineage/frameworks_base refs/heads/q2
 git cherry-pick 8c138be9aa94e5a237bb15845d15fdb27b808270
-git cherry-pick 8c138be9aa94e5a237bb15845d15fdb27b808270..a4d1bc1923779ea3b7740ab32268141cc8923127
+git cherry-pick 8c138be9aa94e5a237bb15845d15fdb27b808270..80cad0c817b7
 cd ../..
 
 # frameworks/native - optimization
@@ -110,7 +110,7 @@ cd ../..
 cd vendor/lineage
 git fetch https://github.com/PixelLineage/vendor_lineage refs/heads/q2
 git cherry-pick 8bf7d2c04fd75a053a4d717f1602a2cf7c59dc80
-git cherry-pick 8bf7d2c04fd75a053a4d717f1602a2cf7c59dc80..440e256f
+git cherry-pick 8bf7d2c04fd75a053a4d717f1602a2cf7c59dc80..58a0b3791abc3b7f5b170228409b4cef15fbc151
 cd ../..
 
 # settings
@@ -159,13 +159,15 @@ cd ../..
 cd device/lineage/sepolicy
 git fetch https://github.com/PixelLineage/device_lineage_sepolicy refs/heads/q2
 git cherry-pick 79c4556aedf1ae2b1298f5363ba3ccca27d717d3
+git cherry-pick ccccbb56c96129612cef2024a0565c3665e1ca5c
+git cherry-pick df07440c29e529d0c113e45888a3ecce5fe864a9
 cd ../../..
 
 # updater
 cd packages/apps/Updater
-git fetch https://github.com/PixelLineage/packages_apps_Updater refs/heads/a16
+git fetch https://github.com/PixelLineage/packages_apps_Updater refs/heads/q2
 git cherry-pick 8aedbfb936fc1afbfaae4e89fcf2109d44d17251
-git cherry-pick ac04611d6f54f89e764ec0186b633e316fd82559
+git cherry-pick 8aedbfb936fc1afbfaae4e89fcf2109d44d17251..0ee3450
 cd ../../..
 
 
@@ -179,12 +181,8 @@ cd ../..
 cd system/security
 git fetch https://github.com/PixelLineage/system_security refs/heads/a16
 git cherry-pick a76dcaf20da114595ab7734da025c2d9f8f113d3
-git cherry-pick a76dcaf20da114595ab7734da025c2d9f8f113d3..d2af9a64
+git cherry-pick a76dcaf20da114595ab7734da025c2d9f8f113d3..3502108d7eb08212c3b7355ecfa2589a95a56f93
 cd ../..
-
-# extra overlay
-rm -rf vendor/extra
-git clone https://github.com/username0136/rom-dump vendor/extra -b integrity
 
 # hw ximi
 rm -rf hardware/xiaomi
