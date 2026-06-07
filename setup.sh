@@ -95,8 +95,8 @@ cd ../..
 # frameworks/base
 cd frameworks/base
 git fetch https://github.com/PixelLineage/frameworks_base refs/heads/q2
-git cherry-pick 8c138be9aa94e5a237bb15845d15fdb27b808270
-git cherry-pick 8c138be9aa94e5a237bb15845d15fdb27b808270..80cad0c817b7
+git cherry-pick fb24f778851348bfa1f60b010f84975d4a6b7fbf
+git cherry-pick fb24f778851348bfa1f60b010f84975d4a6b7fbf..41a2377215c341862f8ad229c90c8e6a378d06a6
 cd ../..
 
 # frameworks/native - optimization
