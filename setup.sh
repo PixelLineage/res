@@ -167,7 +167,7 @@ cd ../../..
 cd packages/apps/Updater
 git fetch https://github.com/PixelLineage/packages_apps_Updater refs/heads/q2
 git cherry-pick 8aedbfb936fc1afbfaae4e89fcf2109d44d17251
-git cherry-pick 8aedbfb936fc1afbfaae4e89fcf2109d44d17251..0ee3450
+git cherry-pick 8aedbfb936fc1afbfaae4e89fcf2109d44d17251..8b54002
 cd ../../..
 
 
