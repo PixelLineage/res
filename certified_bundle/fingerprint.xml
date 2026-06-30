@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CertifiedProps>
+    <Version>7</Version>
+    <Fingerprint>google/bluejay_beta/bluejay:CinnamonBun/CP31.260608.007/15653239:user/release-keys</Fingerprint>
+    <SecurityPatch>2026-06-05</SecurityPatch>
+    <InitialSdk>32</InitialSdk>
+</CertifiedProps>

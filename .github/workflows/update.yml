@@ -1,0 +1,28 @@
+name: Integrity Update
+
+on:
+  schedule:
+    - cron: '0 */5 * * *'   # every 5 hours
+  workflow_dispatch:          # also allows manual trigger from Actions tab
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write         # needed to push commits back to this repo
+
+    steps:
+      - name: Checkout res
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0      # full history so reset works
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends wget curl jq python3
+
+      - name: Run updater
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: bash certified_bundle/update.sh
