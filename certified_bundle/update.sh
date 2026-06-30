@@ -47,23 +47,26 @@ log "Current certified version: $CERTIFIED_VER"
 # ============================================================
 log "Fetching upstream keybox.xml..."
 NEW_KEYBOX="$TMPDIR_WORK/keybox.xml"
-# Use curl --compressed so gzip responses are transparently decompressed
-# wget with Accept-Encoding: gzip saves raw compressed bytes, breaking XML parsing
-curl -s --compressed \
-  --user-agent "$UA" \
-  --header "Accept: application/xml,text/xml,*/*" \
-  --header "Accept-Language: en-US,en;q=0.5" \
-  -o "$NEW_KEYBOX" \
+# wget with full browser headers passes forgejo bot-protection; curl gets blocked from Actions IPs
+# No Accept-Encoding header — avoids receiving raw gzip bytes that break XML parsing
+wget -q \
+  -O "$NEW_KEYBOX" \
   "https://v15.next.forgejo.org/EvolutionX/keybox/raw/branch/main/keybox.xml"
 
-OUR_KEYBOX="$BUNDLE_DIR/keybox.xml"
-
-KEYBOX_CHANGED=false
-if ! cmp -s "$NEW_KEYBOX" "$OUR_KEYBOX"; then
-    KEYBOX_CHANGED=true
-    log "keybox.xml has changed — will update."
+# Sanity-check: must be valid XML before we do anything with it
+if ! head -c 5 "$NEW_KEYBOX" | grep -q '<?xml'; then
+    log "keybox.xml download looks invalid (not XML) — skipping keybox update."
+    log "First bytes: $(xxd -l 16 "$NEW_KEYBOX" | head -1)"
+    KEYBOX_CHANGED=false
 else
-    log "keybox.xml unchanged."
+    OUR_KEYBOX="$BUNDLE_DIR/keybox.xml"
+    KEYBOX_CHANGED=false
+    if ! cmp -s "$NEW_KEYBOX" "$OUR_KEYBOX"; then
+        KEYBOX_CHANGED=true
+        log "keybox.xml has changed — will update."
+    else
+        log "keybox.xml unchanged."
+    fi
 fi
 
 # ============================================================

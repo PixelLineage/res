@@ -16,17 +16,32 @@ MAGIC = b"PLCERT01"
 
 def text(node, name):
     child = node.find(name)
-    if child is None or child.text is None or not child.text.strip():
+    if child is None:
         raise SystemExit(f"missing {name} in {sys.argv[2]}")
-    return child.text.strip()
+    value = "".join(child.itertext()).strip()
+    if not value:
+        raise SystemExit(f"empty {name} in {sys.argv[2]}")
+    return value
+
+def xml_text(node):
+    if node is None:
+        return ""
+    return "".join(node.itertext()).strip()
 
 def pem_to_der(pem):
     if "REPLACE_WITH_" in pem:
         raise SystemExit("replace template PEM values before compiling")
+
     body = "".join(
-        line.strip() for line in pem.splitlines()
-        if line.strip() and not line.startswith("-----")
+        line.strip()
+        for line in pem.splitlines()
+        if (
+            line.strip()
+            and not line.lstrip().startswith("-----")
+            and not line.lstrip().startswith("<!--")
+        )
     )
+
     return base64.b64decode(body, validate=True)
 
 def field(data):
@@ -34,7 +49,9 @@ def field(data):
         data = data.encode("utf-8")
     return struct.pack("<I", len(data)) + data
 
-keybox = ET.parse(sys.argv[1]).getroot()
+parser = ET.XMLParser(target=ET.TreeBuilder(insert_comments=True))
+
+keybox = ET.parse(sys.argv[1], parser=parser).getroot()
 props = ET.parse(sys.argv[2]).getroot()
 
 version = int(text(props, "Version"))
@@ -47,7 +64,8 @@ if key is None:
     raise SystemExit("missing ecdsa key in keybox")
 
 private_key = key.find("PrivateKey")
-if private_key is None or private_key.text is None:
+private_key_pem = xml_text(private_key)
+if not private_key_pem:
     raise SystemExit("missing ecdsa private key")
 
 certs = key.findall(".//CertificateChain/Certificate")
@@ -60,14 +78,15 @@ payload += struct.pack("<I", version)
 payload += field(fingerprint)
 payload += field(security_patch)
 payload += field(initial_sdk)
-payload += field(pem_to_der(private_key.text))
+payload += field(pem_to_der(private_key_pem))
+
 for cert in certs[:3]:
-    if cert.text is None:
+    cert_pem = xml_text(cert)
+    if not cert_pem:
         raise SystemExit("empty certificate in ecdsa chain")
-    payload += field(pem_to_der(cert.text))
+    payload += field(pem_to_der(cert_pem))
 
 with open(sys.argv[3], "wb") as out:
     out.write(payload)
 
 print(f"wrote {sys.argv[3]} version={version} size={len(payload)}")
-PY
