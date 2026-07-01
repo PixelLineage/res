@@ -18,5 +18,7 @@
 - Reboot to recovery: `fastboot reboot recovery`
 - Go to "Apply update" then "Apply from ADB"
 - Flash rom `adb sideload rom-file.zip`
-- Tap yes to reboot recovery and then format data
-- After entering recovery again, "Reboot system" :)
+- Tap yes to reboot recovery on prompt
+- After entering recovery again, go to "Format data"
+- After formatting, go to "Reboot system"
+- Enjoy :)

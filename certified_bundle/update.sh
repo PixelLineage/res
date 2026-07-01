@@ -71,12 +71,18 @@ fi
 
 # ============================================================
 #  STEP 4 — fingerprint update via Google Flash Station API
-#  No zip download — the API gives us all we need:
-#    releaseCandidateName  = build ID  (e.g. CP31.260608.007)
-#    buildId               = numeric   (e.g. 15653239)
-#    previewMetadata.id    = codename prefix (cinnamonbun → CinnamonBun)
-#  Security patch = YYYY-MM-05 from the YYMMDD date in the build ID.
-#  Fingerprint = google/{product}/{device}:{codename}/{rc}/{numId}:user/release-keys
+#  We pin to the CANARY track only (previewMetadata.canary == true),
+#  never QPR/Beta. Reason: Canary's previewMetadata.id encodes a
+#  YYYY-MM tag ("canary-202606") that lines up 1:1 with a real,
+#  Google-published monthly Pixel Security Bulletin entry — so we can
+#  look up the true SecurityPatch instead of guessing it. QPR/Beta
+#  builds carry no such tag and their SPL can lag their compile date
+#  by months, which previously caused us to publish a wrong SP.
+#  (Same approach as PlayIntegrityFix's autopif.yml.)
+#    releaseCandidateName  = build ID  (e.g. ZP11.260515.009)
+#    buildId               = numeric   (e.g. 15513807)
+#    previewMetadata.id    = canary-YYYYMM (e.g. canary-202606)
+#  Fingerprint = google/{product}/{device}:CANARY/{rc}/{numId}:user/release-keys
 # ============================================================
 log "Fetching API key from flash.android.com..."
 APIKEY=$(curl -s "https://flash.android.com/" \
@@ -91,75 +97,73 @@ else
     log "Flash Station API key: ${APIKEY:0:12}..."
     OUR_FINGERPRINT_XML="$BUNDLE_DIR/fingerprint.xml"
 
+    log "Fetching official Pixel security bulletin..."
+    SECBULL_HTML="$TMPDIR_WORK/pixel_secbull.html"
+    wget -q -O "$SECBULL_HTML" "https://source.android.com/docs/security/bulletin/pixel" || true
+
     set +eo pipefail  # API calls may partially fail
 
-    BEST_RC=""; BEST_NUM_ID=""; BEST_CODENAME=""; BEST_PRODUCT=""; BEST_SP=""
+    BEST_RC=""; BEST_NUM_ID=""; BEST_PRODUCT=""; BEST_SP=""
 
     for PRODUCT in bluejay_beta; do
         RAW=$(curl -s \
             --header 'Referer: https://flash.android.com' \
             "https://content-flashstation-pa.googleapis.com/v1/builds?product=${PRODUCT}&key=${APIKEY}")
 
-        # Find active build with latest security patch, construct all fields from API data
+        # Pick the active Canary build; SP is looked up from the bulletin, not guessed
         WINNER=$(echo "$RAW" | python3 -c "
-import json, sys, re
+import json, sys
 
 data = json.load(sys.stdin)
 builds = data.get('flashstationBuild', [])
 
-CODENAMES = {
-    'baklava':     'Baklava',
-    'cinnamonbun': 'CinnamonBun',
-    'canary':      'Canary',
-    'vanilla':     'VanillaIceCream',
-}
-
 best = None
 for b in builds:
     meta = b.get('previewMetadata', {})
-    if not meta.get('active'):
+    if not (meta.get('active') and meta.get('canary')):
         continue
-    rc      = b.get('releaseCandidateName', '')  # e.g. CP31.260608.007
-    num_id  = str(b.get('buildId', ''))          # e.g. 15653239
-    prev_id = meta.get('id', '')                 # e.g. cinnamonbun-qpr1-beta5
+    rc      = b.get('releaseCandidateName', '')  # e.g. ZP11.260515.009
+    num_id  = str(b.get('buildId', ''))          # e.g. 15513807
+    prev_id = meta.get('id', '')                 # e.g. canary-202606
 
-    # Security patch from YYMMDD in build ID (always the 5th of that month)
-    m = re.search(r'\.(\d{2})(\d{2})\d{2}\.', rc)
-    if not m:
+    if not prev_id.startswith('canary-') or len(prev_id) != len('canary-') + 6:
         continue
-    sp = f'20{m.group(1)}-{m.group(2)}-05'
+    yyyymm = prev_id[len('canary-'):]
+    canary_tag = f'{yyyymm[:4]}-{yyyymm[4:]}'  # -> 2026-06
 
-    prefix   = prev_id.split('-')[0].lower()
-    codename = CODENAMES.get(prefix, prefix.title())
-
-    if best is None or sp > best['sp']:
-        best = {'rc': rc, 'num_id': num_id, 'codename': codename,
-                'product': b.get('product', ''), 'sp': sp}
+    best = {'rc': rc, 'num_id': num_id, 'product': b.get('product', ''), 'tag': canary_tag}
 
 if best:
     print(f\"RC={best['rc']}\")
     print(f\"NUMID={best['num_id']}\")
-    print(f\"CODENAME={best['codename']}\")
     print(f\"PRODUCT={best['product']}\")
-    print(f\"SP={best['sp']}\")
+    print(f\"TAG={best['tag']}\")
 " 2>/dev/null)
 
-        RC_VAL=$(echo "$WINNER"    | grep '^RC='       | cut -d= -f2-)
-        NUMID_VAL=$(echo "$WINNER" | grep '^NUMID='    | cut -d= -f2-)
-        COD_VAL=$(echo "$WINNER"   | grep '^CODENAME=' | cut -d= -f2-)
-        PROD_VAL=$(echo "$WINNER"  | grep '^PRODUCT='  | cut -d= -f2-)
-        SP_VAL=$(echo "$WINNER"    | grep '^SP='       | cut -d= -f2-)
+        RC_VAL=$(echo "$WINNER"    | grep '^RC='      | cut -d= -f2-)
+        NUMID_VAL=$(echo "$WINNER" | grep '^NUMID='   | cut -d= -f2-)
+        PROD_VAL=$(echo "$WINNER"  | grep '^PRODUCT=' | cut -d= -f2-)
+        TAG_VAL=$(echo "$WINNER"   | grep '^TAG='     | cut -d= -f2-)
 
-        [[ -z "$RC_VAL" ]] && { log "$PRODUCT: no active build found"; continue; }
-        log "$PRODUCT: best RC=$RC_VAL  SP=$SP_VAL"
+        [[ -z "$RC_VAL" ]] && { log "$PRODUCT: no active canary build found"; continue; }
+
+        # Look up the real SPL for this canary's YYYY-MM tag in the official bulletin.
+        # Fall back to the {tag}-05 guess only if the lookup itself fails.
+        SP_VAL=$(grep -o "<td>${TAG_VAL}-[0-9][0-9]</td>" "$SECBULL_HTML" 2>/dev/null \
+                   | head -1 | sed -e 's;<td>;;' -e 's;</td>;;')
+        if [[ -z "$SP_VAL" ]]; then
+            log "$PRODUCT: could not find $TAG_VAL in security bulletin — assuming ${TAG_VAL}-05"
+            SP_VAL="${TAG_VAL}-05"
+        fi
+        log "$PRODUCT: best RC=$RC_VAL  SP=$SP_VAL (from bulletin tag $TAG_VAL)"
 
         if [[ -z "$BEST_SP" || "$SP_VAL" > "$BEST_SP" ]]; then
             BEST_RC="$RC_VAL"; BEST_NUM_ID="$NUMID_VAL"
-            BEST_CODENAME="$COD_VAL"; BEST_PRODUCT="$PROD_VAL"; BEST_SP="$SP_VAL"
+            BEST_PRODUCT="$PROD_VAL"; BEST_SP="$SP_VAL"
         fi
     done
 
-    set -eo pipefail
+    set -euo pipefail
 
     FP_CHANGED=false
     if [[ -z "$BEST_RC" ]]; then
@@ -168,7 +172,7 @@ if best:
         # Construct full fingerprint from known parts
         BEST_DEVICE="${BEST_PRODUCT/_beta/}"
         BEST_DEVICE="${BEST_DEVICE/_canary/}"
-        NEW_FP="google/${BEST_PRODUCT}/${BEST_DEVICE}:${BEST_CODENAME}/${BEST_RC}/${BEST_NUM_ID}:user/release-keys"
+        NEW_FP="google/${BEST_PRODUCT}/${BEST_DEVICE}:CANARY/${BEST_RC}/${BEST_NUM_ID}:user/release-keys"
         NEW_SP="$BEST_SP"
 
         log "New fingerprint: $NEW_FP"
