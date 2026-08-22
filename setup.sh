@@ -109,8 +109,8 @@ cd ../..
 # vendor
 cd vendor/lineage
 git fetch https://github.com/PixelLineage/vendor_lineage refs/heads/q2
-git cherry-pick 8bf7d2c04fd75a053a4d717f1602a2cf7c59dc80
-git cherry-pick 8bf7d2c04fd75a053a4d717f1602a2cf7c59dc80..58a0b3791abc3b7f5b170228409b4cef15fbc151
+git cherry-pick c43826c59e193627435cc94271299797094f0098
+git cherry-pick c43826c59e193627435cc94271299797094f0098..826aa1b85ce270244b7f33f31095bca97768200d
 cd ../..
 
 # settings
@@ -166,8 +166,8 @@ cd ../../..
 # updater
 cd packages/apps/Updater
 git fetch https://github.com/PixelLineage/packages_apps_Updater refs/heads/q2
-git cherry-pick 8aedbfb936fc1afbfaae4e89fcf2109d44d17251
-git cherry-pick 8aedbfb936fc1afbfaae4e89fcf2109d44d17251..8b54002
+git cherry-pick f2fed0ffb2d40da50cfd33a8f843f30613b080d9
+git cherry-pick f2fed0ffb2d40da50cfd33a8f843f30613b080d9..5372aa6f48299409fa6c8c441fd9cab38e645ec8
 cd ../../..
 
 

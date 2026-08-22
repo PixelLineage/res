@@ -14,6 +14,8 @@ BUNDLE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_DIR="$(dirname "$BUNDLE_DIR")"
 MUNCH_JSON="$REPO_DIR/munch/23.json"
 ALIOTH_JSON="$REPO_DIR/alioth/23.json"
+MUNCH_JSON_V2="$REPO_DIR/munch/23-v2.json"
+ALIOTH_JSON_V2="$REPO_DIR/alioth/23-v2.json"
 TMPDIR_WORK="$(mktemp -d)"
 trap 'rm -rf "$TMPDIR_WORK"' EXIT
 
@@ -253,21 +255,35 @@ fi
 NEW_VER=$((CERTIFIED_VER + 1))
 log "Bumping certified: $CERTIFIED_VER -> $NEW_VER"
 
-python3 - "$MUNCH_JSON" "$NEW_VER" <<'PY'
+# Bumps 'certified' on every entry of a manifest, auto-detecting the shape:
+#   v1 (legacy):  { "response": [ { ..., "certified": N } ] }
+#   v2 (new API): [ { ..., "certified": N } ]
+# Missing files are skipped so the script keeps working if a device lacks one.
+bump_certified() {
+    local file="$1"
+    if [[ ! -f "$file" ]]; then
+        log "  skip (missing): $file"
+        return
+    fi
+    python3 - "$file" "$NEW_VER" <<'PY'
 import sys, json
-with open(sys.argv[1], 'r') as f: d = json.load(f)
-d['response'][0]['certified'] = int(sys.argv[2])
-with open(sys.argv[1], 'w') as f: json.dump(d, f, indent=4)
-print(f"munch/23.json certified -> {sys.argv[2]}")
+path, ver = sys.argv[1], int(sys.argv[2])
+with open(path) as f:
+    d = json.load(f)
+entries = d["response"] if isinstance(d, dict) else d
+for e in entries:
+    e["certified"] = ver
+with open(path, "w") as f:
+    json.dump(d, f, indent=4)
+    f.write("\n")
+print(f"{path} certified -> {ver}")
 PY
+}
 
-python3 - "$ALIOTH_JSON" "$NEW_VER" <<'PY'
-import sys, json
-with open(sys.argv[1], 'r') as f: d = json.load(f)
-d['response'][0]['certified'] = int(sys.argv[2])
-with open(sys.argv[1], 'w') as f: json.dump(d, f, indent=4)
-print(f"alioth/23.json certified -> {sys.argv[2]}")
-PY
+bump_certified "$MUNCH_JSON"
+bump_certified "$ALIOTH_JSON"
+bump_certified "$MUNCH_JSON_V2"
+bump_certified "$ALIOTH_JSON_V2"
 
 # ============================================================
 #  STEP 7 — Compile certified_bundle.bin
@@ -289,7 +305,9 @@ git add certified_bundle/keybox.xml \
         certified_bundle/fingerprint.xml \
         certified_bundle.bin \
         munch/23.json \
-        alioth/23.json
+        alioth/23.json \
+        munch/23-v2.json \
+        alioth/23-v2.json
 git commit -m "$COMMIT_MSG"
 git push origin HEAD
 log "Pushed. Done! certified=$NEW_VER"
