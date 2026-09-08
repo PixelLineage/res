@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CertifiedProps>
-    <Version>12</Version>
+    <Version>13</Version>
     <Fingerprint>google/bluejay_beta/bluejay:CANARY/ZP11.260717.006/16004061:user/release-keys</Fingerprint>
     <SecurityPatch>2026-08-05</SecurityPatch>
     <InitialSdk>32</InitialSdk>
