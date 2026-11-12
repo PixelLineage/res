@@ -68,9 +68,11 @@ private_key_pem = xml_text(private_key)
 if not private_key_pem:
     raise SystemExit("missing ecdsa private key")
 
+# The chain may be 3 or 4 certs depending on the keybox; write all of them.
+# Bounds mirror keystore2's MIN/MAX_CERTIFIED_BUNDLE_CERTS (2..=8).
 certs = key.findall(".//CertificateChain/Certificate")
-if len(certs) < 3:
-    raise SystemExit("ecdsa certificate chain must contain at least 3 certs")
+if not (2 <= len(certs) <= 8):
+    raise SystemExit(f"ecdsa certificate chain must have 2..8 certs (got {len(certs)})")
 
 payload = bytearray()
 payload += MAGIC
@@ -80,7 +82,7 @@ payload += field(security_patch)
 payload += field(initial_sdk)
 payload += field(pem_to_der(private_key_pem))
 
-for cert in certs[:3]:
+for cert in certs:
     cert_pem = xml_text(cert)
     if not cert_pem:
         raise SystemExit("empty certificate in ecdsa chain")
