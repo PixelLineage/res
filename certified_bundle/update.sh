@@ -49,26 +49,23 @@ log "Current certified version: $CERTIFIED_VER"
 # ============================================================
 log "Fetching upstream keybox.xml..."
 NEW_KEYBOX="$TMPDIR_WORK/keybox.xml"
-# wget with full browser headers passes forgejo bot-protection; curl gets blocked from Actions IPs
-# No Accept-Encoding header — avoids receiving raw gzip bytes that break XML parsing
-wget -q \
+wget -q --header="User-Agent: Mozilla/5.0" \
   -O "$NEW_KEYBOX" \
-  "https://v15.next.forgejo.org/EvolutionX/keybox/raw/branch/main/keybox.xml"
+  "https://gitea.com/Evolution-X/keybox/raw/branch/main/keybox.xml"
 
-# Sanity-check: must be valid XML before we do anything with it
-if ! head -c 5 "$NEW_KEYBOX" | grep -q '<?xml'; then
-    log "keybox.xml download looks invalid (not XML) — skipping keybox update."
-    log "First bytes: $(xxd -l 16 "$NEW_KEYBOX" | head -1)"
-    KEYBOX_CHANGED=false
+# Fail the run if the source is dead or didn't return a keybox.
+if ! grep -q '<Keybox' "$NEW_KEYBOX"; then
+    log "ERROR: keybox download failed or is not a keybox"
+    exit 1
+fi
+
+OUR_KEYBOX="$BUNDLE_DIR/keybox.xml"
+KEYBOX_CHANGED=false
+if ! cmp -s "$NEW_KEYBOX" "$OUR_KEYBOX"; then
+    KEYBOX_CHANGED=true
+    log "keybox.xml has changed — will update."
 else
-    OUR_KEYBOX="$BUNDLE_DIR/keybox.xml"
-    KEYBOX_CHANGED=false
-    if ! cmp -s "$NEW_KEYBOX" "$OUR_KEYBOX"; then
-        KEYBOX_CHANGED=true
-        log "keybox.xml has changed — will update."
-    else
-        log "keybox.xml unchanged."
-    fi
+    log "keybox.xml unchanged."
 fi
 
 # ============================================================

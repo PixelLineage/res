@@ -26,6 +26,7 @@ git revert --no-edit e28a2eae962ec559578211c3c452f13aaf65886f
 git revert --no-edit 6db11ffea72411f726ee1d4bd81a39bff34956ed
 
 # revolut check
+git fetch https://github.com/PixelLineage/build_soong a9d0e04d478f157ebc063d30949ee96e9342c032
 git cherry-pick a9d0e04d478f157ebc063d30949ee96e9342c032
 
 cd ../..
@@ -95,8 +96,8 @@ cd ../..
 # frameworks/base
 cd frameworks/base
 git fetch https://github.com/PixelLineage/frameworks_base refs/heads/q2
-git cherry-pick fb24f778851348bfa1f60b010f84975d4a6b7fbf
-git cherry-pick fb24f778851348bfa1f60b010f84975d4a6b7fbf..41a2377215c341862f8ad229c90c8e6a378d06a6
+git cherry-pick 6147746fe0a43650d4733eb2c63d43fcc3d32658
+git cherry-pick 6147746fe0a43650d4733eb2c63d43fcc3d32658..FETCH_HEAD
 cd ../..
 
 # frameworks/native - optimization
@@ -109,8 +110,8 @@ cd ../..
 # vendor
 cd vendor/lineage
 git fetch https://github.com/PixelLineage/vendor_lineage refs/heads/q2
-git cherry-pick c43826c59e193627435cc94271299797094f0098
-git cherry-pick c43826c59e193627435cc94271299797094f0098..826aa1b85ce270244b7f33f31095bca97768200d
+git cherry-pick 62afcb7e7797fb9f5080a0ee4e0c8f8e2a6940dd
+git cherry-pick 62afcb7e7797fb9f5080a0ee4e0c8f8e2a6940dd..FETCH_HEAD
 cd ../..
 
 # settings
@@ -158,16 +159,15 @@ cd ../..
 # device_lineage_sepolicy - rebrand props
 cd device/lineage/sepolicy
 git fetch https://github.com/PixelLineage/device_lineage_sepolicy refs/heads/q2
-git cherry-pick 79c4556aedf1ae2b1298f5363ba3ccca27d717d3
-git cherry-pick ccccbb56c96129612cef2024a0565c3665e1ca5c
-git cherry-pick df07440c29e529d0c113e45888a3ecce5fe864a9
+git cherry-pick 3170c4b8f805a840b611dab10e2fa48d8c492c4b
+git cherry-pick 3170c4b8f805a840b611dab10e2fa48d8c492c4b..FETCH_HEAD
 cd ../../..
 
 # updater
 cd packages/apps/Updater
 git fetch https://github.com/PixelLineage/packages_apps_Updater refs/heads/q2
-git cherry-pick f2fed0ffb2d40da50cfd33a8f843f30613b080d9
-git cherry-pick f2fed0ffb2d40da50cfd33a8f843f30613b080d9..5372aa6f48299409fa6c8c441fd9cab38e645ec8
+git cherry-pick 8e8e13c7f51c238b715c4550bfa7b1863725c66f
+git cherry-pick 8e8e13c7f51c238b715c4550bfa7b1863725c66f..FETCH_HEAD
 cd ../../..
 
 
@@ -179,9 +179,9 @@ cd ../..
 
 # system_security - integrity
 cd system/security
-git fetch https://github.com/PixelLineage/system_security refs/heads/a16
-git cherry-pick a76dcaf20da114595ab7734da025c2d9f8f113d3
-git cherry-pick a76dcaf20da114595ab7734da025c2d9f8f113d3..3502108d7eb08212c3b7355ecfa2589a95a56f93
+git fetch https://github.com/PixelLineage/system_security refs/heads/q2
+git cherry-pick c9ac217ac4867dc22dd7692d9b4fe4754ab5db13
+git cherry-pick c9ac217ac4867dc22dd7692d9b4fe4754ab5db13..FETCH_HEAD
 cd ../..
 
 # hw ximi
