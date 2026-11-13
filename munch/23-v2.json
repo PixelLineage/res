@@ -9,7 +9,9 @@
                 "filename": "lineage-24.0-20261113-quick-munch.zip",
                 "sha256": "afb4272d636b8a930f34381317acf72e",
                 "size": 2671217357,
-                "url": "https://ota.realquick.in/lineage-24.0-20261113-quick-munch.zip"
+                "url": "https://ota.realquick.in/lineage-24.0-20261113-quick-munch.zip",
+                "os_patch_level": "2026-11-01",
+                "os_sdk_level": 36
             }
         ]
     }
