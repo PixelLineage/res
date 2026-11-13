@@ -19,7 +19,7 @@ ALIOTH_JSON_V2="$REPO_DIR/alioth/23-v2.json"
 TMPDIR_WORK="$(mktemp -d)"
 trap 'rm -rf "$TMPDIR_WORK"' EXIT
 
-UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
+PIF_URL="https://raw.githubusercontent.com/Vagelis1608/get_the_canary_miner/refs/heads/main/betas/cinnamonbun/bluejay.pif.prop"
 
 log()  { echo "[$(date '+%H:%M:%S')] $*"; }
 abort(){ echo "[ABORT] $*"; exit 0; }
@@ -69,132 +69,34 @@ else
 fi
 
 # ============================================================
-#  STEP 4 — fingerprint update via Google Flash Station API
-#  We pin to the CANARY track only (previewMetadata.canary == true),
-#  never QPR/Beta. Reason: Canary's previewMetadata.id encodes a
-#  YYYY-MM tag ("canary-202606") that lines up 1:1 with a real,
-#  Google-published monthly Pixel Security Bulletin entry — so we can
-#  look up the true SecurityPatch instead of guessing it. QPR/Beta
-#  builds carry no such tag and their SPL can lag their compile date
-#  by months, which previously caused us to publish a wrong SP.
-#  (Same approach as PlayIntegrityFix's autopif.yml.)
-#    releaseCandidateName  = build ID  (e.g. ZP11.260515.009)
-#    buildId               = numeric   (e.g. 15513807)
-#    previewMetadata.id    = canary-YYYYMM (e.g. canary-202606)
-#  Fingerprint = google/{product}/{device}:CANARY/{rc}/{numId}:user/release-keys
+#  STEP 4 — fingerprint update from upstream pif.prop
 # ============================================================
-log "Fetching API key from flash.android.com..."
-APIKEY=$(curl -s "https://flash.android.com/" \
-    | grep -o '<body data-client-config=[^>]*' \
-    | cut -d';' -f2 \
-    | cut -d'&' -f1 \
-    | sed 's/^key=//') || true
-if [[ -z "$APIKEY" ]]; then
-    log "Could not extract Flash Station API key — skipping fingerprint update."
-    FP_CHANGED=false
+OUR_FINGERPRINT_XML="$BUNDLE_DIR/fingerprint.xml"
+FP_CHANGED=false
+
+log "Fetching pif.prop..."
+PIF="$TMPDIR_WORK/pif.prop"
+if ! wget -q -O "$PIF" "$PIF_URL"; then
+    log "Could not fetch pif.prop — skipping fingerprint update."
+elif ! grep -q '^FINGERPRINT=' "$PIF"; then
+    log "pif.prop missing FINGERPRINT — skipping fingerprint update."
 else
-    log "Flash Station API key: ${APIKEY:0:12}..."
-    OUR_FINGERPRINT_XML="$BUNDLE_DIR/fingerprint.xml"
+    NEW_FP=$(grep '^FINGERPRINT='           "$PIF" | head -1 | cut -d= -f2-)
+    NEW_SP=$(grep '^SECURITY_PATCH='        "$PIF" | head -1 | cut -d= -f2-)
+    NEW_SDK=$(grep '^DEVICE_INITIAL_SDK_INT=' "$PIF" | head -1 | cut -d= -f2-)
+    log "Upstream fingerprint: $NEW_FP"
+    log "Upstream patch:       $NEW_SP"
+    log "Upstream initial SDK: $NEW_SDK"
 
-    log "Fetching official Pixel security bulletin..."
-    SECBULL_HTML="$TMPDIR_WORK/pixel_secbull.html"
-    wget -q -O "$SECBULL_HTML" "https://source.android.com/docs/security/bulletin/pixel" || true
+    OUR_FP=$(python3 -c "import xml.etree.ElementTree as ET; print(ET.parse('$OUR_FINGERPRINT_XML').getroot().findtext('Fingerprint') or '')")
 
-    set +eo pipefail  # API calls may partially fail
-
-    BEST_RC=""; BEST_NUM_ID=""; BEST_PRODUCT=""; BEST_SP=""
-
-    for PRODUCT in bluejay_beta; do
-        RAW=$(curl -s \
-            --header 'Referer: https://flash.android.com' \
-            "https://content-flashstation-pa.googleapis.com/v1/builds?product=${PRODUCT}&key=${APIKEY}")
-
-        # Pick the active Canary build; SP is looked up from the bulletin, not guessed
-        WINNER=$(echo "$RAW" | python3 -c "
-import json, sys
-
-data = json.load(sys.stdin)
-builds = data.get('flashstationBuild', [])
-
-best = None
-for b in builds:
-    meta = b.get('previewMetadata', {})
-    if not (meta.get('active') and meta.get('canary')):
-        continue
-    rc      = b.get('releaseCandidateName', '')  # e.g. ZP11.260515.009
-    num_id  = str(b.get('buildId', ''))          # e.g. 15513807
-    prev_id = meta.get('id', '')                 # e.g. canary-202606
-
-    if not prev_id.startswith('canary-') or len(prev_id) != len('canary-') + 6:
-        continue
-    yyyymm = prev_id[len('canary-'):]
-    canary_tag = f'{yyyymm[:4]}-{yyyymm[4:]}'  # -> 2026-06
-
-    best = {'rc': rc, 'num_id': num_id, 'product': b.get('product', ''), 'tag': canary_tag}
-
-if best:
-    print(f\"RC={best['rc']}\")
-    print(f\"NUMID={best['num_id']}\")
-    print(f\"PRODUCT={best['product']}\")
-    print(f\"TAG={best['tag']}\")
-" 2>/dev/null)
-
-        RC_VAL=$(echo "$WINNER"    | grep '^RC='      | cut -d= -f2-)
-        NUMID_VAL=$(echo "$WINNER" | grep '^NUMID='   | cut -d= -f2-)
-        PROD_VAL=$(echo "$WINNER"  | grep '^PRODUCT=' | cut -d= -f2-)
-        TAG_VAL=$(echo "$WINNER"   | grep '^TAG='     | cut -d= -f2-)
-
-        [[ -z "$RC_VAL" ]] && { log "$PRODUCT: no active canary build found"; continue; }
-
-        # Look up the real SPL for this canary's YYYY-MM tag in the official bulletin.
-        # Fall back to the {tag}-05 guess only if the lookup itself fails.
-        SP_VAL=$(grep -o "<td>${TAG_VAL}-[0-9][0-9]</td>" "$SECBULL_HTML" 2>/dev/null \
-                   | head -1 | sed -e 's;<td>;;' -e 's;</td>;;')
-        if [[ -z "$SP_VAL" ]]; then
-            log "$PRODUCT: could not find $TAG_VAL in security bulletin — assuming ${TAG_VAL}-05"
-            SP_VAL="${TAG_VAL}-05"
-        fi
-        log "$PRODUCT: best RC=$RC_VAL  SP=$SP_VAL (from bulletin tag $TAG_VAL)"
-
-        if [[ -z "$BEST_SP" || "$SP_VAL" > "$BEST_SP" ]]; then
-            BEST_RC="$RC_VAL"; BEST_NUM_ID="$NUMID_VAL"
-            BEST_PRODUCT="$PROD_VAL"; BEST_SP="$SP_VAL"
-        fi
-    done
-
-    set -euo pipefail
-
-    FP_CHANGED=false
-    if [[ -z "$BEST_RC" ]]; then
-        log "Flash Station API returned no usable active build — skipping fingerprint update."
+    if [[ "$OUR_FP" == "$NEW_FP" ]]; then
+        log "Fingerprint is already up to date."
     else
-        # Construct full fingerprint from known parts
-        BEST_DEVICE="${BEST_PRODUCT/_beta/}"
-        BEST_DEVICE="${BEST_DEVICE/_canary/}"
-        NEW_FP="google/${BEST_PRODUCT}/${BEST_DEVICE}:CANARY/${BEST_RC}/${BEST_NUM_ID}:user/release-keys"
-        NEW_SP="$BEST_SP"
-
-        log "New fingerprint: $NEW_FP"
-        log "Security patch:  $NEW_SP"
-
-        # Compare against our current build ID (field [3] when split by /)
-        OUR_BUILD_ID=$(python3 -c "
-import xml.etree.ElementTree as ET
-tree = ET.parse('$OUR_FINGERPRINT_XML')
-fp = tree.getroot().findtext('Fingerprint') or ''
-parts = fp.split('/')
-print(parts[3] if len(parts) > 3 else '')
-") || true
-        log "Our current Build ID: $OUR_BUILD_ID"
-
-        if [[ "$OUR_BUILD_ID" == "$BEST_RC" ]]; then
-            log "Fingerprint is already up to date."
-        else
-            log "Fingerprint needs update: $OUR_BUILD_ID -> $BEST_RC"
-            FP_CHANGED=true
-
-            NEW_VER=$((CERTIFIED_VER + 1))
-            python3 - "$OUR_FINGERPRINT_XML" "$NEW_FP" "$NEW_SP" "$NEW_VER" <<'PY'
+        log "Fingerprint needs update."
+        FP_CHANGED=true
+        NEW_VER=$((CERTIFIED_VER + 1))
+        python3 - "$OUR_FINGERPRINT_XML" "$NEW_FP" "$NEW_SP" "$NEW_VER" "$NEW_SDK" <<'PY'
 import sys
 import xml.etree.ElementTree as ET
 tree = ET.parse(sys.argv[1])
@@ -202,6 +104,8 @@ root = tree.getroot()
 root.find('Fingerprint').text = sys.argv[2]
 root.find('SecurityPatch').text = sys.argv[3]
 root.find('Version').text = sys.argv[4]
+if sys.argv[5]:
+    root.find('InitialSdk').text = sys.argv[5]
 xml_str = ET.tostring(root, encoding='unicode')
 with open(sys.argv[1], 'w', encoding='utf-8') as f:
     f.write('<?xml version="1.0" encoding="utf-8"?>\n')
@@ -209,7 +113,6 @@ with open(sys.argv[1], 'w', encoding='utf-8') as f:
     f.write('\n')
 print(f"fingerprint.xml updated: version={sys.argv[4]}")
 PY
-        fi
     fi
 fi
 
