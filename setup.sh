@@ -184,6 +184,12 @@ git cherry-pick c9ac217ac4867dc22dd7692d9b4fe4754ab5db13
 git cherry-pick c9ac217ac4867dc22dd7692d9b4fe4754ab5db13..FETCH_HEAD
 cd ../..
 
+# ca-certificates - drop compromised emSign root
+cd system/ca-certificates
+git fetch https://github.com/PixelLineage/system_ca-certificates refs/heads/a17
+git cherry-pick ad59e7afbf280fc991678c049011f1a091720f02
+cd ../..
+
 # hw ximi
 rm -rf hardware/xiaomi
 git clone https://github.com/LineageOS/android_hardware_xiaomi hardware/xiaomi -b lineage-23.2
