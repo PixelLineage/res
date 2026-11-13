@@ -1,15 +1,15 @@
 [
     {
-        "datetime": 1787365256,
+        "datetime": 1794603047,
         "type": "quick",
         "version": "23.2",
         "certified": 44,
         "files": [
             {
-                "filename": "lineage-23.2-20260822-quick-munch.zip",
-                "sha256": "7c417b6729bcf37c80b869c3ce0c38bb",
-                "size": 2463193774,
-                "url": "https://littlechest365-my.sharepoint.com/personal/quick_skinow_skin/_layouts/15/download.aspx?share=IQCeCbt1TT1sSaYe3TnQOmI3AYzhls8LNX5cGZTGo2--g2k"
+                "filename": "lineage-24.0-20261113-quick-munch.zip",
+                "sha256": "afb4272d636b8a930f34381317acf72e",
+                "size": 2671217357,
+                "url": "https://ota.realquick.in/lineage-24.0-20261113-quick-munch.zip"
             }
         ]
     }

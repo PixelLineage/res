@@ -1,0 +1,15 @@
+{
+    "response": [
+        {
+            "datetime": 1794603832,
+            "filename": "lineage-24.0-20261113-quick-alioth.zip",
+            "filehash": "fe163bf12f016ece63e44fc2991db12a",
+            "id": "fe163bf12f016ece63e44fc2991db12a",
+            "romtype": "quick",
+            "size": 2656818704,
+            "url": "https://ota.realquick.in/lineage-24.0-20261113-quick-alioth.zip",
+            "version": "24.0",
+            "certified": 44
+        }
+    ]
+}

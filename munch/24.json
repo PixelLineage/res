@@ -1,0 +1,15 @@
+{
+    "response": [
+        {
+            "datetime": 1794603047,
+            "filename": "lineage-24.0-20261113-quick-munch.zip",
+            "filehash": "afb4272d636b8a930f34381317acf72e",
+            "id": "afb4272d636b8a930f34381317acf72e",
+            "romtype": "quick",
+            "size": 2671217357,
+            "url": "https://ota.realquick.in/lineage-24.0-20261113-quick-munch.zip",
+            "version": "24.0",
+            "certified": 44
+        }
+    ]
+}
