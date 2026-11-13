@@ -9,7 +9,9 @@
                 "filename": "lineage-24.0-20261113-quick-alioth.zip",
                 "sha256": "fe163bf12f016ece63e44fc2991db12a",
                 "size": 2656818704,
-                "url": "https://ota.realquick.in/lineage-24.0-20261113-quick-alioth.zip"
+                "url": "https://ota.realquick.in/lineage-24.0-20261113-quick-alioth.zip",
+                "os_patch_level": "2026-11-01",
+                "os_sdk_level": 37
             }
         ]
     }
