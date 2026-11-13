@@ -16,6 +16,8 @@ MUNCH_JSON="$REPO_DIR/munch/23.json"
 ALIOTH_JSON="$REPO_DIR/alioth/23.json"
 MUNCH_JSON_V2="$REPO_DIR/munch/23-v2.json"
 ALIOTH_JSON_V2="$REPO_DIR/alioth/23-v2.json"
+MUNCH_JSON_24="$REPO_DIR/munch/24.json"
+ALIOTH_JSON_24="$REPO_DIR/alioth/24.json"
 TMPDIR_WORK="$(mktemp -d)"
 trap 'rm -rf "$TMPDIR_WORK"' EXIT
 
@@ -184,6 +186,8 @@ bump_certified "$MUNCH_JSON"
 bump_certified "$ALIOTH_JSON"
 bump_certified "$MUNCH_JSON_V2"
 bump_certified "$ALIOTH_JSON_V2"
+bump_certified "$MUNCH_JSON_24"
+bump_certified "$ALIOTH_JSON_24"
 
 # ============================================================
 #  STEP 7 — Compile certified_bundle.bin
@@ -207,7 +211,9 @@ git add certified_bundle/keybox.xml \
         munch/23.json \
         alioth/23.json \
         munch/23-v2.json \
-        alioth/23-v2.json
+        alioth/23-v2.json \
+        munch/24.json \
+        alioth/24.json
 git commit -m "$COMMIT_MSG"
 git push origin HEAD
 log "Pushed. Done! certified=$NEW_VER"
