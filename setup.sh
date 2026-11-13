@@ -194,9 +194,9 @@ cd ../..
 rm -rf hardware/xiaomi
 git clone https://github.com/LineageOS/android_hardware_xiaomi hardware/xiaomi -b lineage-23.2
 
-# # zlib-ng
-# rm -rf external/zlib
-# git clone https://github.com/yaap/external_zlib-ng external/zlib -b sixteen --depth 1
+# zlib-ng
+rm -rf external/zlib
+git clone https://github.com/EmanuelCN/zlib-ng/ -b 17 external/zlib --depth 1
 
 # jemalloc
 #rm -rf external/jemalloc_new
