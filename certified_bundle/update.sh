@@ -21,7 +21,7 @@ ALIOTH_JSON_24="$REPO_DIR/alioth/24.json"
 TMPDIR_WORK="$(mktemp -d)"
 trap 'rm -rf "$TMPDIR_WORK"' EXIT
 
-PIF_URL="https://raw.githubusercontent.com/Vagelis1608/get_the_canary_miner/refs/heads/main/betas/cinnamonbun/bluejay.pif.prop"
+PIF_URL="https://raw.githubusercontent.com/Vagelis1608/get_the_canary_miner/refs/heads/main/devices/bluejay.pif.prop"
 
 log()  { echo "[$(date '+%H:%M:%S')] $*"; }
 abort(){ echo "[ABORT] $*"; exit 0; }
