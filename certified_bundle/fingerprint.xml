@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CertifiedProps>
-    <Version>48</Version>
-    <Fingerprint>OnePlus/OPD2403IN/OP5DAAL1:16/UKQ1.231108.001/U.R4T3.31362f8-b6a7dc-bdc05c:user/release-keys</Fingerprint>
-    <SecurityPatch>2026-09-05</SecurityPatch>
+    <Version>49</Version>
+    <Fingerprint>google/bluejay_beta/bluejay:CANARY/ZP11.261016.008/16754936:user/release-keys</Fingerprint>
+    <SecurityPatch>2026-11-05</SecurityPatch>
     <InitialSdk>32</InitialSdk>
 </CertifiedProps>
