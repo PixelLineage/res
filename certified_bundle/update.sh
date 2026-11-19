@@ -61,16 +61,25 @@ if ! grep -q '<Keybox' "$NEW_KEYBOX"; then
     exit 1
 fi
 
+# Upstream keyboxes carry reseller watermarks (stray text between certs,
+# t.me/Telegram comments, branded DeviceID). Rebuild a clean keybox from
+# only the PEM blocks and validate it (key<->leaf match, chain verifies).
+# If it's unusable, keep ours instead of shipping a broken keybox.
+CLEAN_KEYBOX="$TMPDIR_WORK/keybox.clean.xml"
+if ! python3 -I "$BUNDLE_DIR/sanitize_keybox.py" "$NEW_KEYBOX" "$CLEAN_KEYBOX"; then
+    log "ERROR: upstream keybox failed sanitize/validation — keeping current keybox."
+    cp "$BUNDLE_DIR/keybox.xml" "$CLEAN_KEYBOX"
+fi
+NEW_KEYBOX="$CLEAN_KEYBOX"
+
 OUR_KEYBOX="$BUNDLE_DIR/keybox.xml"
 KEYBOX_CHANGED=false
-# TEMP: keybox auto-update disabled (upstream keybox has junk text injected)
-# if ! cmp -s "$NEW_KEYBOX" "$OUR_KEYBOX"; then
-#     KEYBOX_CHANGED=true
-#     log "keybox.xml has changed — will update."
-# else
-#     log "keybox.xml unchanged."
-# fi
-log "keybox.xml update temporarily disabled."
+if ! cmp -s "$NEW_KEYBOX" "$OUR_KEYBOX"; then
+    KEYBOX_CHANGED=true
+    log "keybox.xml has changed — will update."
+else
+    log "keybox.xml unchanged."
+fi
 
 # ============================================================
 #  STEP 4 — fingerprint update from upstream pif.prop
