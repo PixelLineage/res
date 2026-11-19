@@ -63,12 +63,14 @@ fi
 
 OUR_KEYBOX="$BUNDLE_DIR/keybox.xml"
 KEYBOX_CHANGED=false
-if ! cmp -s "$NEW_KEYBOX" "$OUR_KEYBOX"; then
-    KEYBOX_CHANGED=true
-    log "keybox.xml has changed — will update."
-else
-    log "keybox.xml unchanged."
-fi
+# TEMP: keybox auto-update disabled (upstream keybox has junk text injected)
+# if ! cmp -s "$NEW_KEYBOX" "$OUR_KEYBOX"; then
+#     KEYBOX_CHANGED=true
+#     log "keybox.xml has changed — will update."
+# else
+#     log "keybox.xml unchanged."
+# fi
+log "keybox.xml update temporarily disabled."
 
 # ============================================================
 #  STEP 4 — fingerprint update from upstream pif.prop
